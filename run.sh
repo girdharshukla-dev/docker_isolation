@@ -19,9 +19,12 @@ PROJECT_DIR="${1:?Usage: ./run.sh /<path to project>}"
 # Resolve to an absolute path so docker -v behaves predictably
 PROJECT_DIR="$(cd "$PROJECT_DIR" && pwd)"
 
-docker build -t "$IMAGE_NAME" "$(dirname "$0")"
+sudo docker build \
+    --build-arg HOST_UID="$(id -u)" \
+    --build-arg HOST_GID="$(id -g)" \
+    -t "$IMAGE_NAME" "$(dirname "$0")"
 
-docker run -it --rm \
+sudo docker run -it --rm \
     --name agent_sandbox_run \
     -v "${PROJECT_DIR}:/agent_workspace" \
     --workdir /agent_workspace \

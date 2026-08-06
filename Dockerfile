@@ -6,9 +6,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-RUN useradd -m -s /bin/bash my_agent
-USER my_agent
+RUN usermod -l my_agent ubuntu && \
+    groupmod -n my_agent ubuntu && \
+    usermod -d /home/my_agent -m my_agent
 
-WORKDIR /agent_workspace
+USER my_agent
 
 CMD ["/bin/bash"]
