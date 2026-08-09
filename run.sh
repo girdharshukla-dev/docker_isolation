@@ -28,7 +28,6 @@ sudo docker run -it --rm \
     --name agent_sandbox_run \
     -v "${PROJECT_DIR}:/agent_workspace" \
     --workdir /agent_workspace \
-    --network none \
     --cap-drop ALL \
     --security-opt no-new-privileges \
     "$IMAGE_NAME"
