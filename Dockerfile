@@ -29,7 +29,13 @@ RUN curl -fsSL https://get.pnpm.io/install.sh | sh -
     # && find "$PNPM_HOME" -maxdepth 3
 
 
-RUN pnpm add -g opencode-ai
+RUN pnpm add -g --allow-build=opencode-ai opencode-ai
 
+ENV CARGO_HOME="/home/my_agent/.cargo"
+ENV RUSTUP_HOME="/home/my_agent/.rustup"
+ENV PATH="${CARGO_HOME}/bin:${PATH}"
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path
+
+WORKDIR /agent_workspace
 
 CMD ["/bin/bash"]
